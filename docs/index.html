@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <title>Studentuv pruvodce Kybernetikou</title>
+    <meta
+      name="description"
+      content="Studentsky Docsify rozcestnik pro materialy, maturitni otazky a aktualni informace z kybernetiky."
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"
+    />
+    <style>
+      :root {
+        --theme-color: #0f766e;
+        --theme-color-hover: #115e59;
+        --base-background-color: #f6f5ef;
+        --base-color: #1b1d1f;
+        --sidebar-background: linear-gradient(180deg, #e7f3ef 0%, #f7f5ef 100%);
+        --sidebar-name-color: #0f172a;
+        --sidebar-nav-link-color: #25323d;
+        --sidebar-nav-link-color--active: #0f766e;
+        --sidebar-nav-link-background-color--active: rgba(15, 118, 110, 0.1);
+        --heading-color: #102a43;
+        --link-color: #0f766e;
+        --content-max-width: 58rem;
+        --cover-background-image: radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 34%),
+          radial-gradient(circle at right, rgba(180, 83, 9, 0.12), transparent 28%),
+          linear-gradient(135deg, #f8f6ef 0%, #eef6f1 100%);
+        --font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+        --heading-font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      }
+
+      .app-name-link img {
+        display: none;
+      }
+
+      .markdown-section strong {
+        color: #102a43;
+      }
+
+      .markdown-section blockquote {
+        border-left: 4px solid #0f766e;
+        background: rgba(255, 255, 255, 0.65);
+      }
+
+      .sidebar-nav > ul > li > a {
+        font-weight: 600;
+        letter-spacing: 0.01em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">Nacitam studijni materialy...</div>
+
+    <script>
+      window.$docsify = {
+        name: "Studentuv pruvodce Kybernetikou",
+        repo: "Kybernetika-SPSE/sgc",
+        homepage: "README.md",
+        loadSidebar: "_sidebar.md",
+        auto2top: true,
+        subMaxLevel: 2,
+        maxLevel: 2,
+        notFoundPage: "404.md",
+        search: {
+          placeholder: "Hledat v materialech",
+          noData: "Nic jsem nenasel.",
+          paths: "auto",
+          depth: 3,
+          maxAge: 600,
+          namespace: "sgc-docs"
+        },
+        markdown: {
+          smartypants: true,
+          externalLinkTarget: "_blank",
+          linkify: true
+        }
+      };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+  </body>
+</html>

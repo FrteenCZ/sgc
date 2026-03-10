@@ -12,8 +12,15 @@
       content="Studentský Docsify rozcestník pro materiály, maturitní otázky a aktuální informace z kybernetiky."
     />
     <link
+      id="theme-light"
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css"
+    />
+    <link
+      id="theme-dark"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"
+      disabled
     />
     <link
       rel="stylesheet"
@@ -40,6 +47,23 @@
         --heading-font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       }
 
+      html[data-theme="dark"] {
+        --theme-color: #5eead4;
+        --theme-color-hover: #99f6e4;
+        --base-background-color: #0f1418;
+        --base-color: #e5edf3;
+        --sidebar-background: linear-gradient(180deg, #0f1f24 0%, #11161b 100%);
+        --sidebar-name-color: #f3f4f6;
+        --sidebar-nav-link-color: #cbd5e1;
+        --sidebar-nav-link-color--active: #5eead4;
+        --sidebar-nav-link-background-color--active: rgba(94, 234, 212, 0.12);
+        --heading-color: #f8fafc;
+        --link-color: #5eead4;
+        --cover-background-image: radial-gradient(circle at top left, rgba(45, 212, 191, 0.16), transparent 34%),
+          radial-gradient(circle at right, rgba(251, 191, 36, 0.12), transparent 28%),
+          linear-gradient(135deg, #10161b 0%, #132026 100%);
+      }
+
       .app-name-link img {
         display: none;
       }
@@ -57,12 +81,94 @@
         font-weight: 600;
         letter-spacing: 0.01em;
       }
+
+      #theme-toggle {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 20;
+        border: 1px solid rgba(15, 118, 110, 0.25);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        color: #102a43;
+        padding: 0.45rem 0.8rem;
+        font: 600 0.85rem/1 "Segoe UI", "Trebuchet MS", sans-serif;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+      }
+
+      html[data-theme="dark"] #theme-toggle {
+        background: rgba(15, 23, 32, 0.88);
+        color: #e5edf3;
+        border-color: rgba(94, 234, 212, 0.25);
+      }
+
+      @media (max-width: 768px) {
+        #theme-toggle {
+          bottom: 0.75rem;
+          right: 0.75rem;
+          padding: 0.4rem 0.7rem;
+          font-size: 0.8rem;
+        }
+      }
+
+      /* Keep only the Docsify-active sidebar branch expanded. */
+      .sidebar-nav li > ul {
+        display: none;
+      }
+
+      .sidebar-nav li.active > ul,
+      .sidebar-nav li:has(> ul li.active) > ul {
+        display: block;
+      }
     </style>
   </head>
   <body>
     <div id="app">Načítám studijní materiály...</div>
+    <button id="theme-toggle" type="button" aria-label="Přepnout barevné schéma">Tmavý režim</button>
 
     <script>
+      function applyTheme(theme) {
+        var root = document.documentElement;
+        var lightTheme = document.getElementById('theme-light');
+        var darkTheme = document.getElementById('theme-dark');
+        var toggle = document.getElementById('theme-toggle');
+        var isDark = theme === 'dark';
+
+        root.setAttribute('data-theme', theme);
+        lightTheme.disabled = isDark;
+        darkTheme.disabled = !isDark;
+
+        if (toggle) {
+          toggle.textContent = isDark ? 'Světlý režim' : 'Tmavý režim';
+          toggle.setAttribute('aria-pressed', String(isDark));
+        }
+      }
+
+      function getPreferredTheme() {
+        var savedTheme = localStorage.getItem('sgc-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          return savedTheme;
+        }
+
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      applyTheme(getPreferredTheme());
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var toggle = document.getElementById('theme-toggle');
+        if (!toggle) {
+          return;
+        }
+
+        toggle.addEventListener('click', function () {
+          var nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          localStorage.setItem('sgc-theme', nextTheme);
+          applyTheme(nextTheme);
+        });
+      });
+
       window.$docsify = {
         name: "Studentův průvodce kybernetikou",
         repo: "Kybernetika-SPSE/sgc",
@@ -193,6 +299,10 @@
     <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-latex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
   </body>

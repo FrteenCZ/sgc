@@ -221,30 +221,6 @@
         </button>
 
         <script>
-            window.$docsify = {
-                name: "Studentův průvodce kybernetikou",
-                repo: "Kybernetika-SPSE/sgc",
-                homepage: "README.md",
-                loadSidebar: "_sidebar.md",
-                auto2top: true,
-                subMaxLevel: 2,
-                maxLevel: 2,
-                notFoundPage: "404.md",
-                relativePath: true,
-                search: {
-                    placeholder: "Hledat v materiálech",
-                    noData: "Nic jsem nenašel.",
-                    paths: "auto",
-                    depth: 3,
-                    maxAge: 600,
-                    namespace: "sgc-docs",
-                },
-                markdown: {
-                    smartypants: true,
-                    externalLinkTarget: "_blank",
-                    linkify: true,
-                },
-            };
             function applyTheme(theme) {
                 var root = document.documentElement;
                 var lightTheme = document.getElementById("theme-light");
@@ -293,6 +269,45 @@
                     applyTheme(nextTheme);
                 });
             });
+
+            window.$docsify = {
+                name: "Studentův průvodce kybernetikou",
+                repo: "Kybernetika-SPSE/sgc",
+                homepage: "README.md",
+                loadSidebar: "_sidebar.md",
+                auto2top: true,
+                subMaxLevel: 2,
+                maxLevel: 2,
+                notFoundPage: "404.md",
+                relativePath: true,
+                search: {
+                    placeholder: "Hledat v materiálech",
+                    noData: "Nic jsem nenašel.",
+                    paths: "auto",
+                    depth: 3,
+                    maxAge: 600,
+                    namespace: "sgc-docs",
+                },
+                markdown: {
+                    smartypants: true,
+                    externalLinkTarget: "_blank",
+                    linkify: true,
+                },
+                plugins: [
+                    function (hook, vm) {
+                        hook.beforeEach(function (content) {
+                            // Find math blocks and replace double backslashes with quadruple
+                            // so that they survive the Markdown render process
+                            return content.replace(
+                                /\$\$.*?\$\$/gs,
+                                function (match) {
+                                    return match.replace(/\\\\/g, "\\\\\\\\");
+                                },
+                            );
+                        });
+                    },
+                ],
+            };
 
             window.MathJax = {
                 tex: {
